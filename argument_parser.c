@@ -25,7 +25,7 @@ static inline int bitmap_get(int idx) {
     return (bitmap[byte_idx] & (1 << bit_idx)) != 0;
 }
 
-void get_args(char* line) {
+void get_args_cstr(char* line) {
     char* args = malloc(strlen(line));
     strcpy(args, line);
 
