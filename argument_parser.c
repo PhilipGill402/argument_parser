@@ -2,27 +2,14 @@
 
 // allocates 7 bytes (56 bits) which is more than we need
 // first 24 bits are for lower case, last 24 bits are for upper case
-static uint8_t* bitmap = NULL;
+static uint64_t bitmap = 0;
 
 static inline void bitmap_set(int idx) {
-    if (!bitmap) {
-        bitmap = calloc(7, sizeof(uint8_t));
-    }
-    
-    int byte_idx = idx / 8;
-    int bit_idx = idx % 8;
-    bitmap[byte_idx] |= (1 << bit_idx);
+    bitmap |= (1 << idx);
 }
 
 static inline int bitmap_get(int idx) {
-    if (!bitmap) {
-        bitmap = calloc(7, sizeof(uint8_t));
-    }
-    
-    int byte_idx = idx / 8;
-    int bit_idx = idx % 8;
-     
-    return (bitmap[byte_idx] & (1 << bit_idx)) != 0;
+    return (bitmap & (1 << idx)) != 0;
 }
 
 void get_args_cstr(char* line) {
