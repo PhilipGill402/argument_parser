@@ -44,28 +44,6 @@ The bitmap allocates 7 bytes, which gives 56 total bits. This is enough to store
 
 ---
 
-## Files
-
-### `argument_parser.h`
-
-Expected function declarations:
-
-```c
-#ifndef ARGUMENT_PARSER_H
-#define ARGUMENT_PARSER_H
-
-void get_args(char *line);
-int is_arg(char arg);
-
-#endif
-```
-
-### `argument_parser.c`
-
-Contains the bitmap logic and argument parsing implementation.
-
----
-
 ## Usage
 
 Example:
@@ -231,33 +209,6 @@ get_args("ls -b");
 ```
 
 After both calls, both `a` and `b` will be marked as active.
-
----
-
-## Important Fixes to Consider
-
-The current implementation should allocate space for the null terminator when copying the input string:
-
-```c
-char *args = malloc(strlen(line) + 1);
-strcpy(args, line);
-```
-
-instead of:
-
-```c
-char *args = malloc(strlen(line));
-```
-
-Also, if the input has no arguments after the command, this line could become unsafe:
-
-```c
-arg++;
-```
-
-because `arg` may be `NULL`.
-
-A safer structure would check `arg` before using it.
 
 ---
 
